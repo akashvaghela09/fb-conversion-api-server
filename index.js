@@ -6,7 +6,7 @@ const PORT = 6060;
 app.use(express.json());
 
 // extract env variables
-const { API_VERSION, PIXEL_ID, ACCESS_TOKEN } = process.env;
+const { PIXEL_ID, ACCESS_TOKEN } = process.env;
 
 // fb conversion api
 const bizSdk = require('facebook-nodejs-business-sdk');
@@ -37,15 +37,13 @@ app.post('/events', async (req, res) => {
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     const userAgent = req.headers['user-agent'];
 
-    console.log("ip: ", ip);
-    
     try {
 
         const userData = (new UserData())
             .setEmails([email])
             .setPhones([...phoneNumbers])
             // It is recommended to send Client IP and User Agent for Conversions API Events.
-            .setClientIpAddress(ip)
+            // .setClientIpAddress(ip)
             .setClientUserAgent(userAgent)
         // .setFbp('fb.1.1558571054389.1098115397')
         // .setFbc('fb.1.1554763741205.AbCdEfGhIjKlMnOpQrStUvWxYz1234567890');
