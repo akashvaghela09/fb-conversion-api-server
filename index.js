@@ -37,6 +37,8 @@ app.post('/events', async (req, res) => {
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     const userAgent = req.headers['user-agent'];
 
+    console.log("ip: ", ip);
+    
     try {
 
         const userData = (new UserData())
@@ -70,7 +72,7 @@ app.post('/events', async (req, res) => {
         const eventsData = [serverEvent];
         const eventRequest = (new EventRequest(ACCESS_TOKEN, PIXEL_ID))
             .setEvents(eventsData)
-            // .setTestEventCode("TEST49770") // test event code [only required for testing]
+            .setTestEventCode("TEST49770") // test event code [only required for testing]
 
         eventRequest.execute().then(
             response => {
